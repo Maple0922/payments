@@ -1,11 +1,11 @@
 <template>
-  <v-app v-if="isLoggedIn">
+  <v-app v-if="!isLoggedIn">
     <v-navigation-drawer
       v-model="drawer"
-      dark
       :mini-variant="miniVariant"
       fixed
       app
+      dark
     >
       <v-list>
         <v-list-item
@@ -27,13 +27,6 @@
     <v-app-bar dark fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-chip
-        v-if="name"
-        color="orange darken-4"
-        class="text-caption font-weight-bold"
-        >{{ name }}</v-chip
-      >
     </v-app-bar>
     <v-main>
       <v-container>
@@ -49,30 +42,19 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 export default {
   data() {
     return {
-      isLoggedIn: false,
+      isLoggedIn: true,
       clipped: false,
       drawer: false,
-      name: '',
       items: [
         {
-          icon: 'mdi-format-list-bulleted',
-          title: 'List',
-          to: '/list',
+          icon: 'mdi-home',
+          title: 'Home',
+          to: '/',
         },
         {
-          icon: 'mdi-wallet-outline',
-          title: 'Pay',
-          to: '/pay',
-        },
-        {
-          icon: 'mdi-tag-text-outline',
-          title: 'Tag',
-          to: '/tag',
-        },
-        {
-          icon: 'mdi-logout',
-          title: 'Logout',
-          to: '/logout',
+          icon: 'mdi-login',
+          title: 'Login',
+          to: '/login',
         },
       ],
       miniVariant: false,
@@ -87,10 +69,9 @@ export default {
       const auth = getAuth()
       onAuthStateChanged(auth, (user) => {
         this.isLoggedIn = !!user
-        if (!user) {
-          this.$router.push({ path: '/' })
+        if (user) {
+          this.$router.push({ path: '/list' })
         }
-        this.name = user.displayName
       })
     },
   },
