@@ -51,11 +51,6 @@ export default {
           title: 'Home',
           to: '/',
         },
-        {
-          icon: 'mdi-login',
-          title: 'Login',
-          to: '/login',
-        },
       ],
       miniVariant: false,
       title: 'Payments',

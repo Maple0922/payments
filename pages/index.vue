@@ -9,7 +9,7 @@
           max-width="300"
           depressed
           color="primary"
-          to="login"
+          @click="loginWithGoogle"
         >
           <v-icon small class="mr-2">mdi-google</v-icon>
           Login with Google
@@ -20,7 +20,47 @@
 </template>
 
 <script>
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
+
 export default {
   layout: 'unauthorized',
+
+  methods: {
+    loginWithGoogle() {
+      const provider = new GoogleAuthProvider()
+      const auth = getAuth()
+      this.$router.push({ path: '/login' })
+
+      signInWithPopup(auth, provider)
+        .then((res) => {
+          this.createUserIfNotExist(res.user)
+        })
+        .catch((err) => {
+          const errorCode = err.code
+          const errorMessage = err.message
+          const email = err.email
+          const credential = GoogleAuthProvider.credentialFromError(err)
+          console.error(errorCode, errorMessage, email, credential) // eslint-disable-line no-console
+        })
+        .finally(() => {
+          this.$router.push({ path: '/list' })
+        })
+    },
+    async createUserIfNotExist(user) {
+      const db = getFirestore()
+      const userRef = doc(db, 'users', user.uid)
+      const userSnap = await getDoc(userRef)
+
+      if (!userSnap.exists()) {
+        setDoc(userRef, {
+          name: user.displayName,
+          email: user.email,
+          money: 0,
+        })
+      }
+    },
+  },
 }
 </script>

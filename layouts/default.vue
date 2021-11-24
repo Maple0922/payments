@@ -60,11 +60,6 @@ export default {
           to: '/list',
         },
         {
-          icon: 'mdi-wallet-outline',
-          title: 'Pay',
-          to: '/pay',
-        },
-        {
           icon: 'mdi-tag-text-outline',
           title: 'Tag',
           to: '/tag',
