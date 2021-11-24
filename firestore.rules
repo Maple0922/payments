@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+    	return request.auth != null
+    }
+
+    function isAuthenticatedWithId(userId) {
+      return isAuthenticated() && userId == request.auth.uid
+    }
+
+    match /users/{userId} {
+      allow get, update: if isAuthenticatedWithId(userId)
+      allow create: if isAuthenticatedWithId(userId) && request.resource.data.uid == userId;
+
+
+      match /payments/{paymentId} {
+        allow read, write: if isAuthenticatedWithId(userId)
+      }
+
+      match /tags/{tagId} {
+        allow read, write: if isAuthenticatedWithId(userId)
+      }
+    }
+  }
+}
