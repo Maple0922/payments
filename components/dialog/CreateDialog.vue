@@ -63,8 +63,8 @@ export default {
     create() {
       if (this.$refs.form.validate()) {
         this.$emit('create', this.payment)
+        this.$refs.form.reset()
       }
-      this.$refs.form.reset()
     },
     updateDate(date) {
       this.payment.date = date
