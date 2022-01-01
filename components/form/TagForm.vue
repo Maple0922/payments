@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="start" class="flex-nowrap overflow-x-hidden">
-    <v-col>
+    <v-col class="py-0">
       <v-row class="pa-3">
         <v-col class="col-left icon d-flex align-center justify-center">
           <v-icon>mdi-tag</v-icon>

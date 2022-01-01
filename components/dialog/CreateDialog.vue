@@ -14,8 +14,8 @@
         <v-icon dark> mdi-plus </v-icon>
       </v-btn>
     </template>
-    <v-card>
-      <v-card-title> <span class="text-h5">New</span> </v-card-title>
+    <v-card class="py-2">
+      <v-card-title><span class="text-h6 mb-8">新規作成</span></v-card-title>
       <v-card-text>
         <v-form ref="form">
           <DateForm :now-date="payment.date" @updateChildDate="updateDate" />
@@ -27,9 +27,9 @@
           <TagForm :now-tag="payment.tag" @updateChildTag="updateTag" />
         </v-form>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions class="mt-8">
         <v-spacer></v-spacer>
-        <v-btn dark color="blue darken-4" @click="create">create</v-btn>
+        <v-btn dark color="blue darken-4" @click="create">作成</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col>
+    <v-col class="py-0">
       <v-text-field
         :value="nowPrice"
         outlined

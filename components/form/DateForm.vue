@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col>
+    <v-col class="py-0">
       <v-menu
         v-model="menu"
         :close-on-content-click="false"
