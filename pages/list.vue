@@ -81,6 +81,17 @@ export default {
         },
         { text: 'Price', value: 'displayPrice' },
       ],
+      snackbar: {
+        success: {
+          message: '新規作成しました',
+          color: 'success',
+        },
+        failure: {
+          message: 'エラーが発生しました',
+          color: 'error',
+          timeout: 5000,
+        },
+      },
     }
   },
   mounted() {
@@ -117,12 +128,19 @@ export default {
     },
     async create(payment) {
       const db = getFirestore()
-      await addDoc(collection(db, 'users', this.user.uid, 'payments'), {
-        name: payment.name,
-        price: Number(payment.price),
-        at: new Date(payment.date),
-        tagUid: payment.tag,
-      })
+      try {
+        await addDoc(collection(db, 'users', this.user.uid, 'payments'), {
+          name: payment.name,
+          price: Number(payment.price),
+          at: new Date(payment.date),
+          tagUid: payment.tag,
+        })
+        this.$store.dispatch('snackbar/getSnackbar', this.snackbar.success)
+      } catch (e) {
+        this.$store.dispatch('snackbar/getSnackbar', this.snackbar.failure)
+        console.error(e.message)
+      }
+
       await this.getPayments()
       this.$refs.createDialog.dialog = false
     },

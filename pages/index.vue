@@ -21,11 +21,25 @@
 
 <script>
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 
 export default {
   layout: 'unauthorized',
+
+  data() {
+    return {
+      snackbar: {
+        success: {
+          message: 'ログインしました。',
+          color: 'success',
+        },
+        failure: {
+          message: 'ログインに失敗しました。',
+          color: 'error',
+        },
+      },
+    }
+  },
 
   methods: {
     loginWithGoogle() {
@@ -36,6 +50,7 @@ export default {
       signInWithPopup(auth, provider)
         .then((res) => {
           this.createUserIfNotExist(res.user)
+          this.$store.dispatch('snackbar/getSnackbar', this.snackbar.success)
         })
         .catch((err) => {
           const errorCode = err.code
@@ -43,6 +58,7 @@ export default {
           const email = err.email
           const credential = GoogleAuthProvider.credentialFromError(err)
           console.error(errorCode, errorMessage, email, credential) // eslint-disable-line no-console
+          this.$store.dispatch('snackbar/getSnackbar', this.snackbar.failure)
         })
         .finally(() => {
           this.$router.push({ path: '/list' })

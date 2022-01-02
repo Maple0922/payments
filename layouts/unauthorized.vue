@@ -33,13 +33,18 @@
         <Nuxt />
       </v-container>
     </v-main>
+    <Snackbar />
   </v-app>
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import Snackbar from '@/components/util/Snackbar.vue'
 
 export default {
+  components: {
+    Snackbar,
+  },
   data() {
     return {
       isLoggedIn: true,
