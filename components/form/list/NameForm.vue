@@ -10,7 +10,6 @@
         :rules="rules"
         @change="updateName"
       >
-        name
       </v-text-field>
     </v-col>
   </v-row>
