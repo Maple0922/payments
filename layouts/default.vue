@@ -70,6 +70,11 @@ export default {
           to: '/tag',
         },
         {
+          icon: 'mdi-credit-card-multiple-outline',
+          title: 'Card',
+          to: '/card',
+        },
+        {
           icon: 'mdi-logout',
           title: 'Logout',
           to: '/logout',
