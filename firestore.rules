@@ -22,6 +22,10 @@ service cloud.firestore {
       match /tags/{tagId} {
         allow read, write: if isAuthenticatedWithId(userId)
       }
+
+      match /cards/{cardId} {
+        allow read, write: if isAuthenticatedWithId(userId)
+      }
     }
   }
 }
