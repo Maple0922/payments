@@ -58,7 +58,7 @@ import {
   collection,
 } from 'firebase/firestore'
 
-import CreateDialog from '@/components/dialog/CreateDialog.vue'
+import CreateDialog from '@/components/dialog/list/CreateDialog.vue'
 
 export default {
   components: {
@@ -138,7 +138,7 @@ export default {
         this.$store.dispatch('snackbar/getSnackbar', this.snackbar.success)
       } catch (e) {
         this.$store.dispatch('snackbar/getSnackbar', this.snackbar.failure)
-        console.error(e.message)
+        console.error(e.message) // eslint-disable-line
       }
 
       await this.getPayments()
