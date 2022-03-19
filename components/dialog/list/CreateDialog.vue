@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import DateForm from '@/components/form/DateForm.vue'
-import NameForm from '@/components/form/NameForm.vue'
-import TagForm from '@/components/form/TagForm.vue'
-import PriceForm from '@/components/form/PriceForm.vue'
+import DateForm from '@/components/form/list/DateForm.vue'
+import NameForm from '@/components/form/list/NameForm.vue'
+import TagForm from '@/components/form/list/TagForm.vue'
+import PriceForm from '@/components/form/list/PriceForm.vue'
 
 export default {
   components: {
