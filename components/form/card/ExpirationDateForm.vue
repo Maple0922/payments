@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     updateExpirationDate(expirationDate) {
-      if (expirationDate.length === 2) {
+      if (expirationDate && expirationDate.length === 2) {
         expirationDate += '/'
       }
       this.$emit('updateChildExpirationDate', expirationDate)

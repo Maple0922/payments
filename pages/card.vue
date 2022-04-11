@@ -6,17 +6,28 @@
         v-for="(card, key) in cards"
         ref="creditCard"
         :key="key"
-        class="pa-2 pa-sm-4"
+        class="pa-3 pa-md-4"
         cols="6"
-        lg="3"
-        md="4"
-        sm="6"
+        lg="2"
+        md="3"
+        sm="4"
       >
-        <v-card :color="`#${card.color}`" class="cursor-pointer">
+        <v-card
+          :color="`#${card.color}`"
+          class="cursor-pointer rounded-lg"
+          :class="`${textColor(card.color)}--text`"
+        >
           <v-responsive :aspect-ratio="1.618">
             <v-card-title>
               {{ card.title }}
             </v-card-title>
+            <v-card-text>
+              <p>{{ card.number }}</p>
+              <p>
+                {{ card.name }} {{ card.displayExpirationDate }}
+                {{ card.securityCode }}
+              </p>
+            </v-card-text>
           </v-responsive>
         </v-card>
       </v-col>
@@ -113,7 +124,7 @@ export default {
         title: card.title,
         name: card.name,
         number: card.number,
-        expirationDate: Date.parse(`20${yy}-${mm}-01 00:00:00`),
+        expirationDate: new Date(`20${yy}`, mm, 1, 0, 0, 0),
         securityCode: card.securityCode,
       }
     },
@@ -123,6 +134,17 @@ export default {
       const mm = month < 10 ? `0${month}` : month
 
       return `${mm}/${yy}`
+    },
+    textColor(cardColorCode) {
+      const red = cardColorCode.substr(0, 2)
+      const green = cardColorCode.substr(2, 2)
+      const blue = cardColorCode.substr(4, 2)
+      const brightness = Math.floor(
+        parseInt(red, 16) * 0.299 +
+          parseInt(green, 16) * 0.587 +
+          parseInt(blue, 16) * 0.114
+      )
+      return brightness >= 140 ? 'black' : 'white'
     },
   },
 }

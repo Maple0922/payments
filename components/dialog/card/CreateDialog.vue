@@ -17,6 +17,23 @@
     <v-card class="py-2">
       <v-card-title><span class="text-h6 mb-8">新規作成</span></v-card-title>
       <v-card-text>
+        <v-card
+          class="mx-auto mb-8"
+          width="300"
+          :color="card.color"
+          :class="`${textColor}--text`"
+        >
+          <v-responsive aspect-ratio="1.618">
+            <v-card-title>
+              {{ card.title }}
+            </v-card-title>
+            <v-card-text>
+              <p>{{ card.number }}</p>
+              <p>{{ card.name }}</p>
+              <p>{{ card.expirationDate }} {{ card.securityCode }}</p>
+            </v-card-text>
+          </v-responsive>
+        </v-card>
         <v-form ref="form">
           <ColorForm :now-color="card.color" @updateChildColor="updateColor" />
           <TitleForm :now-title="card.title" @updateChildTitle="updateTitle" />
@@ -79,11 +96,25 @@ export default {
       },
     }
   },
+  computed: {
+    textColor() {
+      const cardColorCode = this.card.color.slice(1)
+      const red = cardColorCode.substr(0, 2)
+      const green = cardColorCode.substr(2, 2)
+      const blue = cardColorCode.substr(4, 2)
+      const brightness = Math.floor(
+        parseInt(red, 16) * 0.299 +
+          parseInt(green, 16) * 0.587 +
+          parseInt(blue, 16) * 0.114
+      )
+      return brightness >= 140 ? 'black' : 'white'
+    },
+  },
   methods: {
     create() {
       if (this.$refs.form.validate()) {
         this.$emit('create', this.card)
-        // this.$refs.form.reset()
+        this.$refs.form.reset()
       }
     },
     updateColor(color) {
