@@ -124,7 +124,7 @@ export default {
         title: card.title,
         name: card.name,
         number: card.number,
-        expirationDate: new Date(`20${yy}`, mm, 1, 0, 0, 0),
+        expirationDate: new Date(`20${yy}`, Number(mm) + 1, 1, 0, 0, 0),
         securityCode: card.securityCode,
       }
     },
